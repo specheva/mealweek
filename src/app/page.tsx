@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 import { getWeekStart } from "@/lib/utils";
-import { WeekPlanner } from "@/components/planner/WeekPlanner";
+import { Planner } from "@/components/planner/Planner";
 import { startOfDay } from "date-fns";
 
 export default async function Home() {
@@ -52,5 +52,5 @@ export default async function Home() {
     orderBy: { updatedAt: "desc" },
   });
 
-  return <WeekPlanner initialPlan={plan} allMeals={allMeals} />;
+  return <Planner initialPlan={plan} allMeals={allMeals} />;
 }

@@ -31,6 +31,7 @@ interface MealPickerProps {
   targetSlot: string;
   plannedEntries: PlanEntryWithMeal[];
   onMealAdded: () => void;
+  isSwap?: boolean;
 }
 
 type ScoredMeal = {
@@ -47,6 +48,7 @@ export function MealPicker({
   targetDay,
   targetSlot,
   onMealAdded,
+  isSwap = false,
 }: MealPickerProps) {
   const [search, setSearch] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -151,7 +153,7 @@ export function MealPicker({
         <div className="flex items-center justify-between p-4 border-b border-stone-100">
           <div>
             <h2 className="text-lg font-semibold text-stone-900">
-              Add Meal
+              {isSwap ? "Swap Meal" : "Add Meal"}
             </h2>
             <p className="text-sm text-stone-500">
               {DAY_NAMES[targetDay]} · {targetSlot}
