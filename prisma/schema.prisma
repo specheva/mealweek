@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Meal {
+  id              String           @id @default(cuid())
+  title           String
+  description     String?
+  sourceUrl       String?
+  sourceType      String?
+  imageUrl        String?
+  prepTimeMinutes Int?
+  cookTimeMinutes Int?
+  difficulty      String           @default("medium")
+  cuisine         String?
+  category        String?
+  notes           String?
+  isFavorite      Boolean          @default(false)
+  isComplete      Boolean          @default(true)
+  timesCooked     Int              @default(0)
+  lastCookedAt    DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  tags        MealTag[]
+  ingredients MealIngredient[]
+  planEntries PlanEntry[]
+}
+
+model Tag {
+  id    String    @id @default(cuid())
+  name  String    @unique
+  color String?
+
+  meals MealTag[]
+}
+
+model MealTag {
+  mealId String
+  tagId  String
+  meal   Meal   @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([mealId, tagId])
+}
+
+model MealIngredient {
+  id       String  @id @default(cuid())
+  mealId   String
+  name     String
+  quantity Float?
+  unit     String?
+  note     String?
+  category String?
+
+  meal Meal @relation(fields: [mealId], references: [id], onDelete: Cascade)
+}
+
+model WeekPlan {
+  id        String      @id @default(cuid())
+  weekStart DateTime    @unique
+  createdAt DateTime    @default(now())
+
+  entries PlanEntry[]
+}
+
+model PlanEntry {
+  id         String   @id @default(cuid())
+  weekPlanId String
+  mealId     String
+  dayOfWeek  Int
+  slot       String   @default("dinner")
+  sortOrder  Int      @default(0)
+
+  weekPlan WeekPlan @relation(fields: [weekPlanId], references: [id], onDelete: Cascade)
+  meal     Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+  @@unique([weekPlanId, dayOfWeek, slot, mealId])
+}

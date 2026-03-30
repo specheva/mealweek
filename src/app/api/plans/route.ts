@@ -1,12 +1,16 @@
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getWeekStart } from "@/lib/utils";
-import { WeekPlanner } from "@/components/planner/WeekPlanner";
 import { startOfDay } from "date-fns";
 
-export default async function Home() {
-  const weekStart = startOfDay(getWeekStart(new Date()));
+export async function GET(req: NextRequest) {
+  const weekStartParam = req.nextUrl.searchParams.get("weekStart");
+  if (!weekStartParam) {
+    return NextResponse.json({ error: "weekStart required" }, { status: 400 });
+  }
 
-  // Get or create this week's plan
+  const weekStart = startOfDay(new Date(weekStartParam));
+
+  // Find or create the week plan
   let plan = await prisma.weekPlan.findUnique({
     where: { weekStart },
     include: {
@@ -42,15 +46,5 @@ export default async function Home() {
     });
   }
 
-  // Get all meals for the picker
-  const allMeals = await prisma.meal.findMany({
-    where: { isComplete: true },
-    include: {
-      tags: { include: { tag: true } },
-      ingredients: true,
-    },
-    orderBy: { updatedAt: "desc" },
-  });
-
-  return <WeekPlanner initialPlan={plan} allMeals={allMeals} />;
+  return NextResponse.json(plan);
 }
