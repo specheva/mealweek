@@ -13,6 +13,7 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import { parseMealInput } from "@/lib/meal-parser";
+import { MealIllustration } from "@/components/shared/MealIllustration";
 import { ImportFromLink } from "./ImportFromLink";
 import type { Meal, MealIngredient, Tag, MealTag } from "@prisma/client";
 
@@ -277,17 +278,30 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
         {/* Preview card — shown after parsing */}
         {preview && (
           <div className="rounded-xl border border-blue-200 bg-blue-50/30 p-4 space-y-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-700">
-                Preview
-              </span>
+            {/* Illustration + header */}
+            <div className="flex items-center gap-3">
+              <MealIllustration
+                title={title}
+                ingredients={preview.ingredients.map((i) => i.name)}
+                size="md"
+              />
+              <div className="flex-1">
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-semibold text-blue-700">
+                    Preview
+                  </span>
+                </div>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  {preview.ingredients.length} ingredients detected
+                </p>
+              </div>
             </div>
 
             {/* Parsed ingredients */}
             <div>
               <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                Ingredients ({preview.ingredients.length})
+                Ingredients
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {preview.ingredients.map((ing, i) => (
@@ -302,11 +316,6 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
                       </span>
                     )}
                     {ing.name}
-                    {ing.category && ing.category !== "other" && (
-                      <span className="text-[9px] text-stone-400 uppercase">
-                        {ing.category}
-                      </span>
-                    )}
                   </span>
                 ))}
               </div>
@@ -328,11 +337,35 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
                   cook
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-200">
-                <ChefHat className="w-3.5 h-3.5 text-stone-400" />
-                <span className="text-sm text-stone-700 capitalize">
-                  {preview.difficulty}
-                </span>
+            </div>
+
+            {/* Difficulty selector */}
+            <div>
+              <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1.5">
+                Difficulty
+              </p>
+              <div className="flex gap-1.5">
+                {(["easy", "medium", "hard"] as const).map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() =>
+                      setPreview({ ...preview, difficulty: level })
+                    }
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors tap-highlight-none ${
+                      preview.difficulty === level
+                        ? level === "easy"
+                          ? "bg-blue-600 text-white"
+                          : level === "medium"
+                            ? "bg-amber-500 text-white"
+                            : "bg-red-500 text-white"
+                        : "bg-white border border-stone-200 text-stone-600 hover:bg-stone-50"
+                    }`}
+                  >
+                    <ChefHat className="w-3.5 h-3.5" />
+                    <span className="capitalize">{level}</span>
+                  </button>
+                ))}
               </div>
             </div>
 

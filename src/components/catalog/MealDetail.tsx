@@ -15,6 +15,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { MealIllustration } from "@/components/shared/MealIllustration";
 import type { Meal, MealIngredient, Tag, MealTag } from "@prisma/client";
 
 type MealWithRelations = Meal & {
@@ -99,19 +100,14 @@ export function MealDetail({ meal }: MealDetailProps) {
         Back
       </button>
 
-      {/* Hero image */}
-      <div className="h-48 md:h-64 rounded-xl bg-stone-100 overflow-hidden relative">
-        {meal.imageUrl ? (
-          <img
-            src={meal.imageUrl}
-            alt={meal.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-6xl">
-            🍽
-          </div>
-        )}
+      {/* Hero illustration */}
+      <div className="h-48 md:h-64 rounded-xl overflow-hidden relative">
+        <MealIllustration
+          title={meal.title}
+          ingredients={meal.ingredients.map((i) => i.name)}
+          size="lg"
+          className="h-48 md:h-64 rounded-xl"
+        />
         {!meal.isComplete && (
           <div className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100/90 text-amber-700 text-sm font-medium">
             <AlertCircle className="w-4 h-4" />

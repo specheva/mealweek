@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Star, Clock, ExternalLink, AlertCircle } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { MealIllustration } from "@/components/shared/MealIllustration";
 import type { Meal, MealIngredient, Tag, MealTag } from "@prisma/client";
 
 type MealWithRelations = Meal & {
@@ -29,19 +30,14 @@ export function MealCard({ meal }: MealCardProps) {
       href={`/catalog/${meal.id}`}
       className="block rounded-xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden tap-highlight-none"
     >
-      {/* Image */}
-      <div className="h-32 bg-stone-100 relative overflow-hidden">
-        {meal.imageUrl ? (
-          <img
-            src={meal.imageUrl}
-            alt={meal.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl">
-            🍽
-          </div>
-        )}
+      {/* Illustration */}
+      <div className="h-32 relative overflow-hidden">
+        <MealIllustration
+          title={meal.title}
+          ingredients={meal.ingredients.map((i) => i.name)}
+          size="lg"
+          className="h-32 rounded-none"
+        />
 
         {meal.isFavorite && (
           <div className="absolute top-2 right-2 p-1 rounded-full bg-white/90 shadow-sm">

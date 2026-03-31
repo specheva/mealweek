@@ -1,6 +1,7 @@
 "use client";
 
 import { Clock, Plus, X, Star } from "lucide-react";
+import { MealIllustration } from "@/components/shared/MealIllustration";
 import type { PlanEntry, Meal, MealIngredient, Tag, MealTag } from "@prisma/client";
 
 type MealWithRelations = Meal & {
@@ -110,18 +111,11 @@ function MealEntryCard({
 
   return (
     <div className="flex items-start gap-2 p-2 rounded-lg bg-stone-50 group">
-      {/* Meal image or placeholder */}
-      <div className="w-10 h-10 rounded-lg bg-stone-200 flex-shrink-0 overflow-hidden flex items-center justify-center text-lg">
-        {meal.imageUrl ? (
-          <img
-            src={meal.imageUrl}
-            alt={meal.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          "🍽"
-        )}
-      </div>
+      <MealIllustration
+        title={meal.title}
+        ingredients={meal.ingredients.map((i) => i.name)}
+        size="sm"
+      />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1">

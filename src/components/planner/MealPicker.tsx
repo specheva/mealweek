@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { DAY_NAMES } from "@/lib/utils";
 import type { PlanEntry, Meal, MealIngredient, Tag, MealTag } from "@prisma/client";
+import { MealIllustration } from "@/components/shared/MealIllustration";
 
 type MealWithRelations = Meal & {
   tags: (MealTag & { tag: Tag })[];
@@ -325,17 +326,12 @@ function PickerMealCard({
 
   return (
     <div className="flex items-center gap-3 p-3 rounded-xl bg-stone-50 hover:bg-stone-100 transition-colors">
-      <div className="w-12 h-12 rounded-lg bg-stone-200 flex-shrink-0 overflow-hidden flex items-center justify-center text-xl">
-        {meal.imageUrl ? (
-          <img
-            src={meal.imageUrl}
-            alt={meal.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          "🍽"
-        )}
-      </div>
+      <MealIllustration
+        title={meal.title}
+        ingredients={meal.ingredients?.map((i) => i.name) || []}
+        size="sm"
+        className="w-12 h-12"
+      />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1">

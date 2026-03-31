@@ -10,6 +10,7 @@ import {
   Sparkles,
   Check,
 } from "lucide-react";
+import { MealIllustration } from "@/components/shared/MealIllustration";
 import { DAY_NAMES } from "@/lib/utils";
 import type {
   PlanEntry,
@@ -197,18 +198,11 @@ function DayMealCard({
         isPast ? "bg-stone-50 opacity-70" : "bg-stone-50"
       } group`}
     >
-      {/* Image */}
-      <div className="w-14 h-14 rounded-xl bg-stone-200 flex-shrink-0 overflow-hidden flex items-center justify-center text-2xl">
-        {meal.imageUrl ? (
-          <img
-            src={meal.imageUrl}
-            alt={meal.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          "🍽"
-        )}
-      </div>
+      <MealIllustration
+        title={meal.title}
+        ingredients={meal.ingredients.map((i) => i.name)}
+        size="md"
+      />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
