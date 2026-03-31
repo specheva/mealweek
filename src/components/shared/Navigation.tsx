@@ -19,7 +19,7 @@ export function Navigation() {
       <nav className="hidden sm:block sticky top-0 z-40 border-b border-stone-200 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
           <Link href="/" className="text-lg font-bold text-blue-600">
-            Sous Chef
+            Set the Table
           </Link>
           <div className="flex items-center gap-1">
             {navItems.map((item) => {

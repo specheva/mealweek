@@ -214,7 +214,7 @@ export function Planner({ initialPlan, allMeals }: PlannerProps) {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-stone-900">Sous Chef</h1>
+        <h1 className="text-xl font-bold text-stone-900">Set the Table</h1>
 
         {/* View mode switcher */}
         <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-0.5">

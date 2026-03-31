@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Shared TypeScript types for Sous Chef
+// Shared TypeScript types for Set the Table
 //
 // These types extend the Prisma-generated types with common "include"
 // patterns used throughout the app.
