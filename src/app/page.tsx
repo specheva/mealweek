@@ -1,16 +1,23 @@
 import { prisma } from "@/lib/db";
 import { getWeekStart } from "@/lib/utils";
 import { Planner } from "@/components/planner/Planner";
+import { HomeClient } from "@/components/HomeClient";
 import { startOfDay } from "date-fns";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
+  const session = await getServerSession(authOptions);
+  const householdId = ((session as unknown) as Record<string, any>)?.householdId as string || null;
+
   const weekStart = startOfDay(getWeekStart(new Date()));
 
-  // Get or create this week's plan
-  let plan = await prisma.weekPlan.findUnique({
-    where: { weekStart },
+  let plan = await prisma.weekPlan.findFirst({
+    where: householdId
+      ? { householdId, weekStart }
+      : { weekStart, householdId: null },
     include: {
       entries: {
         include: {
@@ -21,14 +28,14 @@ export default async function Home() {
             },
           },
         },
-        orderBy: [{ dayOfWeek: "asc" }, { sortOrder: "asc" }],
+        orderBy: [{ dayOfWeek: "asc" as const }, { sortOrder: "asc" as const }],
       },
     },
   });
 
   if (!plan) {
     plan = await prisma.weekPlan.create({
-      data: { weekStart },
+      data: { weekStart, householdId },
       include: {
         entries: {
           include: {
@@ -44,9 +51,10 @@ export default async function Home() {
     });
   }
 
-  // Get all meals for the picker
   const allMeals = await prisma.meal.findMany({
-    where: { isComplete: true },
+    where: householdId
+      ? { isComplete: true, OR: [{ householdId }, { householdId: null }] }
+      : { isComplete: true },
     include: {
       tags: { include: { tag: true } },
       ingredients: true,
@@ -54,9 +62,14 @@ export default async function Home() {
     orderBy: { updatedAt: "desc" },
   });
 
-  // Serialize to plain JSON to avoid Date serialization issues
-  const serializedPlan = JSON.parse(JSON.stringify(plan));
-  const serializedMeals = JSON.parse(JSON.stringify(allMeals));
+  const showOnboarding = !!(session && !((session as unknown) as Record<string, any>)?.onboarded);
 
-  return <Planner initialPlan={serializedPlan} allMeals={serializedMeals} />;
+  return (
+    <HomeClient showOnboarding={showOnboarding}>
+      <Planner
+        initialPlan={JSON.parse(JSON.stringify(plan))}
+        allMeals={JSON.parse(JSON.stringify(allMeals))}
+      />
+    </HomeClient>
+  );
 }

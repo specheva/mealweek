@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Navigation } from "@/components/shared/Navigation";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -33,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} font-[family-name:var(--font-geist-sans)]`}>
-        <div className="min-h-screen pb-20 md:pb-0 md:pt-16">
-          <Navigation />
-          <main className="mx-auto max-w-4xl px-4 py-4 md:py-6">
-            {children}
-          </main>
-        </div>
+        <AuthProvider>
+          <div className="min-h-screen pb-20 md:pb-0 md:pt-16">
+            <Navigation />
+            <main className="mx-auto max-w-4xl px-4 py-4 md:py-6">
+              {children}
+            </main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

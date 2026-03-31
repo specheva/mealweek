@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { startOfDay } from "date-fns";
 
@@ -8,11 +10,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "weekStart required" }, { status: 400 });
   }
 
+  const session = await getServerSession(authOptions);
+  const householdId = (session as any)?.householdId || null;
   const weekStart = startOfDay(new Date(weekStartParam));
 
-  // Find or create the week plan
-  let plan = await prisma.weekPlan.findUnique({
-    where: { weekStart },
+  let plan = await prisma.weekPlan.findFirst({
+    where: householdId
+      ? { householdId, weekStart }
+      : { weekStart, householdId: null },
     include: {
       entries: {
         include: {
@@ -30,7 +35,7 @@ export async function GET(req: NextRequest) {
 
   if (!plan) {
     plan = await prisma.weekPlan.create({
-      data: { weekStart },
+      data: { weekStart, householdId },
       include: {
         entries: {
           include: {

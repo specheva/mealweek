@@ -8,6 +8,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ── Auth ────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  image         String?
+  onboarded     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+
+  householdId   String?
+  household     Household?  @relation(fields: [householdId], references: [id])
+  meals         Meal[]
+}
+
+model Household {
+  id        String   @id @default(cuid())
+  name      String   @default("My Household")
+  createdAt DateTime @default(now())
+
+  members   User[]
+  meals     Meal[]
+  weekPlans WeekPlan[]
+}
+
+// ── Meals ───────────────────────────────────────────────────────────
+
 model Meal {
   id              String           @id @default(cuid())
   title           String
@@ -27,6 +54,11 @@ model Meal {
   lastCookedAt    DateTime?
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+
+  createdById     String?
+  createdBy       User?            @relation(fields: [createdById], references: [id])
+  householdId     String?
+  household       Household?       @relation(fields: [householdId], references: [id])
 
   tags        MealTag[]
   ingredients MealIngredient[]
@@ -62,12 +94,19 @@ model MealIngredient {
   meal Meal @relation(fields: [mealId], references: [id], onDelete: Cascade)
 }
 
+// ── Planning ────────────────────────────────────────────────────────
+
 model WeekPlan {
-  id        String      @id @default(cuid())
-  weekStart DateTime    @unique
-  createdAt DateTime    @default(now())
+  id          String      @id @default(cuid())
+  weekStart   DateTime
+  createdAt   DateTime    @default(now())
+
+  householdId String?
+  household   Household?  @relation(fields: [householdId], references: [id])
 
   entries PlanEntry[]
+
+  @@unique([householdId, weekStart])
 }
 
 model PlanEntry {
