@@ -45,19 +45,19 @@ export function DayColumn({
     <div
       className={`rounded-xl border ${
         isToday
-          ? "border-emerald-300 bg-emerald-50/50"
+          ? "border-blue-300 bg-blue-50/50"
           : "border-stone-200 bg-white"
       } p-3 shadow-sm`}
     >
       <div className="flex items-center justify-between mb-2">
         <h3
           className={`text-sm font-semibold ${
-            isToday ? "text-emerald-700" : "text-stone-700"
+            isToday ? "text-blue-700" : "text-stone-700"
           }`}
         >
           {dayName}
           {isToday && (
-            <span className="ml-2 text-xs font-normal text-emerald-600">
+            <span className="ml-2 text-xs font-normal text-blue-600">
               Today
             </span>
           )}
@@ -89,7 +89,7 @@ export function DayColumn({
       {/* Add meal button */}
       <button
         onClick={() => onAddMeal("dinner")}
-        className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 px-3 text-sm text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors tap-highlight-none"
+        className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 px-3 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors tap-highlight-none"
       >
         <Plus className="w-4 h-4" />
         Add meal

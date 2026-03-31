@@ -150,7 +150,7 @@ export function MealDetail({ meal }: MealDetailProps) {
         <span
           className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm capitalize ${
             meal.difficulty === "easy"
-              ? "bg-emerald-50 text-emerald-700"
+              ? "bg-blue-50 text-blue-700"
               : meal.difficulty === "hard"
                 ? "bg-red-50 text-red-700"
                 : "bg-amber-50 text-amber-700"
@@ -189,15 +189,6 @@ export function MealDetail({ meal }: MealDetailProps) {
               {mt.tag.name}
             </span>
           ))}
-        </div>
-      )}
-
-      {/* Description */}
-      {meal.description && (
-        <div className="rounded-xl bg-white border border-stone-200 p-4">
-          <p className="text-sm text-stone-700 leading-relaxed">
-            {meal.description}
-          </p>
         </div>
       )}
 
@@ -276,7 +267,7 @@ export function MealDetail({ meal }: MealDetailProps) {
 
         <button
           onClick={markCooked}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition-colors tap-highlight-none"
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors tap-highlight-none"
         >
           <CookingPot className="w-4 h-4" />
           Mark as Cooked

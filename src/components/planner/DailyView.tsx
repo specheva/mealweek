@@ -55,7 +55,7 @@ interface DailyViewProps {
 }
 
 const difficultyLabel: Record<string, { text: string; color: string }> = {
-  easy: { text: "Easy", color: "text-emerald-600 bg-emerald-50" },
+  easy: { text: "Easy", color: "text-blue-600 bg-blue-50" },
   medium: { text: "Medium", color: "text-amber-600 bg-amber-50" },
   hard: { text: "Hard", color: "text-red-600 bg-red-50" },
 };
@@ -85,7 +85,7 @@ export function DailyView({
             key={index}
             className={`rounded-xl border shadow-sm ${
               isToday
-                ? "border-emerald-300 bg-emerald-50/30 ring-1 ring-emerald-200"
+                ? "border-blue-300 bg-blue-50/30 ring-1 ring-blue-200"
                 : isPast
                   ? "border-stone-100 bg-stone-50/50"
                   : "border-stone-200 bg-white"
@@ -97,7 +97,7 @@ export function DailyView({
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                     isToday
-                      ? "bg-emerald-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-stone-100 text-stone-600"
                   }`}
                 >
@@ -106,7 +106,7 @@ export function DailyView({
                 <div>
                   <span
                     className={`text-sm font-semibold ${
-                      isToday ? "text-emerald-700" : isPast ? "text-stone-400" : "text-stone-700"
+                      isToday ? "text-blue-700" : isPast ? "text-stone-400" : "text-stone-700"
                     }`}
                   >
                     {dayName}
@@ -117,7 +117,7 @@ export function DailyView({
                 </div>
               </div>
               {isToday && (
-                <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
                   Today
                 </span>
               )}
@@ -153,7 +153,7 @@ export function DailyView({
 
               {!hasMeals && loadingSuggestions && (
                 <div className="flex items-center justify-center py-4 gap-2">
-                  <div className="w-4 h-4 border-2 border-stone-200 border-t-emerald-500 rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-stone-200 border-t-blue-500 rounded-full animate-spin" />
                   <span className="text-xs text-stone-400">
                     Finding a suggestion...
                   </span>
@@ -163,7 +163,7 @@ export function DailyView({
               {/* Add more button */}
               <button
                 onClick={() => onAddMeal(index, "dinner")}
-                className="w-full flex items-center justify-center gap-1.5 py-2 text-sm text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors tap-highlight-none"
+                className="w-full flex items-center justify-center gap-1.5 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors tap-highlight-none"
               >
                 <Plus className="w-4 h-4" />
                 Add meal
@@ -283,13 +283,13 @@ function DaySuggestionCard({
   onSwap: () => void;
 }) {
   return (
-    <div className="rounded-xl border border-dashed border-emerald-200 bg-emerald-50/40 p-3">
+    <div className="rounded-xl border border-dashed border-blue-200 bg-blue-50/40 p-3">
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
-          <Sparkles className="w-5 h-5 text-emerald-600" />
+        <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+          <Sparkles className="w-5 h-5 text-blue-600" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-emerald-600 mb-0.5">
+          <p className="text-xs font-medium text-blue-600 mb-0.5">
             Recommended for you
           </p>
           <p className="text-sm font-semibold text-stone-800">
@@ -300,7 +300,7 @@ function DaySuggestionCard({
               {suggestion.reasons.map((r, i) => (
                 <span
                   key={i}
-                  className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700"
+                  className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-700"
                 >
                   {r}
                 </span>
@@ -312,7 +312,7 @@ function DaySuggestionCard({
       <div className="flex gap-2 mt-3">
         <button
           onClick={onAccept}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 tap-highlight-none"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 tap-highlight-none"
         >
           <Check className="w-4 h-4" />
           Add this

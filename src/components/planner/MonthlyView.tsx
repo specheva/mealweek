@@ -202,7 +202,7 @@ export default function MonthlyView({
                 <button
                   onClick={() => onWeekSelect(weekStart)}
                   aria-label={`Select week ${weekNum}`}
-                  className="flex items-start justify-center pt-2 text-[10px] font-medium text-stone-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors border-r border-stone-200"
+                  className="flex items-start justify-center pt-2 text-[10px] font-medium text-stone-400 hover:text-blue-600 hover:bg-blue-50 transition-colors border-r border-stone-200"
                 >
                   W{weekNum}
                 </button>
@@ -229,8 +229,8 @@ export default function MonthlyView({
                         text-left
                         transition-colors
                         hover:bg-stone-50
-                        focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-inset
-                        ${today ? "bg-emerald-50/60 ring-1 ring-inset ring-emerald-400" : ""}
+                        focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset
+                        ${today ? "bg-blue-50/60 ring-1 ring-inset ring-blue-400" : ""}
                         ${!inMonth ? "bg-stone-50/50" : "bg-white"}
                       `}
                     >
@@ -240,7 +240,7 @@ export default function MonthlyView({
                           inline-flex items-center justify-center
                           text-xs sm:text-sm leading-none
                           ${today
-                            ? "h-6 w-6 rounded-full bg-emerald-600 text-white font-bold"
+                            ? "h-6 w-6 rounded-full bg-blue-600 text-white font-bold"
                             : inMonth
                               ? "font-semibold text-stone-900"
                               : "font-normal text-stone-400"
@@ -259,7 +259,7 @@ export default function MonthlyView({
                               key={i}
                               className={`
                                 block h-1.5 w-1.5 rounded-full
-                                ${past && !today ? "bg-emerald-400/50" : "bg-emerald-500"}
+                                ${past && !today ? "bg-blue-400/50" : "bg-blue-500"}
                               `}
                             />
                           ))}
@@ -278,8 +278,8 @@ export default function MonthlyView({
                               block w-full truncate rounded px-1 py-0.5
                               text-[10px] leading-tight
                               ${past && !today
-                                ? "bg-emerald-100/60 text-emerald-800/60"
-                                : "bg-emerald-100 text-emerald-800"
+                                ? "bg-blue-100/60 text-blue-800/60"
+                                : "bg-blue-100 text-blue-800"
                               }
                             `}
                             title={entry.meal.title}

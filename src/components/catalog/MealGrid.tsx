@@ -90,7 +90,7 @@ export function MealGrid({ meals, tags }: MealGridProps) {
           </a>
           <a
             href="/meals/new"
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition-colors tap-highlight-none"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors tap-highlight-none"
           >
             <Plus className="w-4 h-4" />
             Add Meal
@@ -108,14 +108,14 @@ export function MealGrid({ meals, tags }: MealGridProps) {
               placeholder="Search meals, cuisines, ingredients..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`p-2.5 rounded-xl border transition-colors tap-highlight-none ${
               showFilters || selectedTags.length > 0
-                ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+                ? "border-blue-300 bg-blue-50 text-blue-700"
                 : "border-stone-200 bg-white text-stone-600"
             }`}
           >
@@ -137,7 +137,7 @@ export function MealGrid({ meals, tags }: MealGridProps) {
                     onClick={() => toggleTag(tag.id)}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-colors tap-highlight-none ${
                       selectedTags.includes(tag.id)
-                        ? "bg-emerald-100 text-emerald-700"
+                        ? "bg-blue-100 text-blue-700"
                         : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                     }`}
                   >
@@ -205,7 +205,7 @@ export function MealGrid({ meals, tags }: MealGridProps) {
               setSearch("");
               setSelectedTags([]);
             }}
-            className="mt-2 text-sm text-emerald-600 font-medium"
+            className="mt-2 text-sm text-blue-600 font-medium"
           >
             Clear filters
           </button>

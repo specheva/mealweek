@@ -13,19 +13,13 @@ async function main() {
   console.log("Cleared existing data.\n");
 
   // ── Tags ──────────────────────────────────────────────────────────────
+  // 5 mutually exclusive tags — each meal gets exactly one
   const tagData = [
-    { name: "Under 20 Min", color: "#22c55e" },
-    { name: "Beginner Friendly", color: "#3b82f6" },
-    { name: "High Protein", color: "#ef4444" },
-    { name: "Kid Friendly", color: "#f59e0b" },
-    { name: "Vegetarian", color: "#10b981" },
-    { name: "Low Effort", color: "#8b5cf6" },
-    { name: "Meal Prep", color: "#06b6d4" },
+    { name: "Quick & Easy", color: "#3b82f6" },
     { name: "Comfort Food", color: "#f97316" },
+    { name: "Health-Conscious", color: "#22c55e" },
     { name: "Date Night", color: "#ec4899" },
-    { name: "One Pot", color: "#6366f1" },
-    { name: "Healthy", color: "#14b8a6" },
-    { name: "Weeknight", color: "#84cc16" },
+    { name: "Meal Prep", color: "#8b5cf6" },
   ] as const;
 
   const tags: Record<string, { id: string }> = {};
@@ -57,7 +51,7 @@ async function main() {
       isFavorite: true,
       timesCooked: 8,
       lastCookedAt: daysAgo(4),
-      tags: ["Under 20 Min", "Beginner Friendly", "Kid Friendly"],
+      tags: ["Quick & Easy"],
       ingredients: [
         { name: "Chicken Breast", quantity: 1.5, unit: "lb", category: "protein" },
         { name: "Flour Tortillas", quantity: 8, unit: "pcs", category: "pantry" },
@@ -81,7 +75,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 3,
       lastCookedAt: daysAgo(12),
-      tags: ["Vegetarian", "Weeknight", "Beginner Friendly"],
+      tags: ["Quick & Easy"],
       ingredients: [
         { name: "Penne Pasta", quantity: 1, unit: "lb", category: "pantry" },
         { name: "Zucchini", quantity: 1, unit: "pcs", category: "produce" },
@@ -104,7 +98,7 @@ async function main() {
       isFavorite: true,
       timesCooked: 5,
       lastCookedAt: daysAgo(7),
-      tags: ["High Protein", "Healthy", "Date Night"],
+      tags: ["Date Night"],
       ingredients: [
         { name: "Salmon Fillet", quantity: 2, unit: "pcs", category: "protein" },
         { name: "Soy Sauce", quantity: 3, unit: "tbsp", category: "pantry" },
@@ -127,7 +121,7 @@ async function main() {
       isFavorite: true,
       timesCooked: 11,
       lastCookedAt: daysAgo(2),
-      tags: ["One Pot", "Comfort Food", "Kid Friendly", "Weeknight"],
+      tags: ["Comfort Food"],
       ingredients: [
         { name: "Chicken Breast", quantity: 1, unit: "lb", category: "protein" },
         { name: "Fettuccine", quantity: 12, unit: "oz", category: "pantry" },
@@ -150,7 +144,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 4,
       lastCookedAt: daysAgo(18),
-      tags: ["Low Effort", "Meal Prep", "High Protein"],
+      tags: ["Meal Prep"],
       ingredients: [
         { name: "Chicken Thighs", quantity: 1.5, unit: "lb", category: "protein" },
         { name: "Bell Peppers", quantity: 3, unit: "pcs", note: "mixed colors", category: "produce" },
@@ -174,7 +168,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 2,
       lastCookedAt: daysAgo(21),
-      tags: ["Under 20 Min", "High Protein", "Weeknight"],
+      tags: ["Quick & Easy"],
       ingredients: [
         { name: "Ground Chicken", quantity: 1, unit: "lb", category: "protein" },
         { name: "Thai Basil", quantity: 1, unit: "cup", category: "produce" },
@@ -197,7 +191,7 @@ async function main() {
       isFavorite: true,
       timesCooked: 6,
       lastCookedAt: daysAgo(10),
-      tags: ["Kid Friendly", "Comfort Food", "Date Night"],
+      tags: ["Comfort Food"],
       ingredients: [
         { name: "Pizza Dough", quantity: 1, unit: "lb", category: "pantry" },
         { name: "San Marzano Tomatoes", quantity: 14, unit: "oz", note: "canned, crushed", category: "pantry" },
@@ -219,7 +213,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 3,
       lastCookedAt: daysAgo(14),
-      tags: ["Healthy", "High Protein", "Meal Prep"],
+      tags: ["Health-Conscious"],
       ingredients: [
         { name: "Chicken Breast", quantity: 1.5, unit: "lb", category: "protein" },
         { name: "Cucumber", quantity: 1, unit: "pcs", category: "produce" },
@@ -243,7 +237,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 4,
       lastCookedAt: daysAgo(9),
-      tags: ["High Protein", "Weeknight", "Under 20 Min"],
+      tags: ["Quick & Easy"],
       ingredients: [
         { name: "Flank Steak", quantity: 1, unit: "lb", note: "thinly sliced", category: "protein" },
         { name: "Broccoli Florets", quantity: 3, unit: "cup", category: "produce" },
@@ -267,7 +261,7 @@ async function main() {
       isFavorite: true,
       timesCooked: 2,
       lastCookedAt: daysAgo(30),
-      tags: ["Comfort Food", "Date Night", "High Protein"],
+      tags: ["Date Night"],
       ingredients: [
         { name: "Whole Chicken", quantity: 4, unit: "lb", category: "protein" },
         { name: "Lemon", quantity: 2, unit: "pcs", category: "produce" },
@@ -291,7 +285,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 7,
       lastCookedAt: daysAgo(3),
-      tags: ["Under 20 Min", "Vegetarian", "Kid Friendly", "Low Effort"],
+      tags: ["Quick & Easy"],
       ingredients: [
         { name: "Black Beans", quantity: 15, unit: "oz", note: "canned, drained", category: "pantry" },
         { name: "Flour Tortillas", quantity: 4, unit: "pcs", category: "pantry" },
@@ -313,7 +307,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 3,
       lastCookedAt: daysAgo(16),
-      tags: ["High Protein", "Weeknight", "Meal Prep"],
+      tags: ["Meal Prep"],
       ingredients: [
         { name: "Shrimp", quantity: 1, unit: "lb", note: "peeled and deveined", category: "protein" },
         { name: "Cooked Rice", quantity: 3, unit: "cup", note: "day-old preferred", category: "pantry" },
@@ -337,7 +331,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 2,
       lastCookedAt: daysAgo(25),
-      tags: ["Under 20 Min", "Vegetarian", "Low Effort"],
+      tags: ["Health-Conscious"],
       ingredients: [
         { name: "Rotini Pasta", quantity: 12, unit: "oz", category: "pantry" },
         { name: "Fresh Mozzarella", quantity: 8, unit: "oz", note: "cubed", category: "dairy" },
@@ -359,7 +353,7 @@ async function main() {
       isFavorite: true,
       timesCooked: 3,
       lastCookedAt: daysAgo(11),
-      tags: ["Date Night", "High Protein", "Comfort Food"],
+      tags: ["Date Night"],
       ingredients: [
         { name: "Ribeye Steak", quantity: 1.5, unit: "lb", note: "thinly sliced", category: "protein" },
         { name: "Asian Pear", quantity: 1, unit: "pcs", note: "grated", category: "produce" },
@@ -383,7 +377,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 4,
       lastCookedAt: daysAgo(6),
-      tags: ["Vegetarian", "One Pot", "Healthy", "Meal Prep"],
+      tags: ["Health-Conscious"],
       ingredients: [
         { name: "Chickpeas", quantity: 15, unit: "oz", note: "canned, drained", category: "pantry" },
         { name: "Sweet Potato", quantity: 1, unit: "pcs", note: "cubed", category: "produce" },
@@ -407,7 +401,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 5,
       lastCookedAt: daysAgo(1),
-      tags: ["Under 20 Min", "Low Effort", "Beginner Friendly"],
+      tags: ["Quick & Easy"],
       ingredients: [
         { name: "Bacon", quantity: 8, unit: "slices", category: "protein" },
         { name: "Romaine Lettuce", quantity: 4, unit: "leaves", category: "produce" },
@@ -431,7 +425,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 0,
       lastCookedAt: null,
-      tags: ["Comfort Food", "Weeknight"],
+      tags: ["Comfort Food"],
       ingredients: [
         { name: "Lo Mein Noodles", quantity: 12, unit: "oz", category: "pantry" },
         { name: "Chili Flakes", quantity: 2, unit: "tbsp", category: "spice" },
@@ -452,7 +446,7 @@ async function main() {
       isFavorite: false,
       timesCooked: 0,
       lastCookedAt: null,
-      tags: ["Kid Friendly", "Comfort Food"],
+      tags: ["Comfort Food"],
       ingredients: [
         { name: "Ground Beef", quantity: 1, unit: "lb", category: "protein" },
         { name: "Corn Tortillas", quantity: 8, unit: "pcs", category: "pantry" },
@@ -519,11 +513,11 @@ async function main() {
 
   // Pick 5 meals for Mon-Fri
   const planAssignments = [
-    { dayOfWeek: 1, title: "Chicken Tacos" },           // Monday
-    { dayOfWeek: 2, title: "Vegetable Curry" },          // Tuesday
-    { dayOfWeek: 3, title: "One-Pot Chicken Alfredo" },  // Wednesday
-    { dayOfWeek: 5, title: "Salmon Teriyaki Bowl" },     // Friday
-    { dayOfWeek: 6, title: "Homemade Pizza" },           // Saturday
+    { dayOfWeek: 0, title: "Chicken Tacos" },           // Monday
+    { dayOfWeek: 1, title: "Vegetable Curry" },          // Tuesday
+    { dayOfWeek: 2, title: "One-Pot Chicken Alfredo" },  // Wednesday
+    { dayOfWeek: 4, title: "Salmon Teriyaki Bowl" },     // Friday
+    { dayOfWeek: 5, title: "Homemade Pizza" },           // Saturday
   ];
 
   let entriesCreated = 0;

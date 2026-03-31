@@ -83,12 +83,12 @@ export function ImportFromLink({ onImport, onSkip }: ImportFromLinkProps) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://www.instagram.com/p/..."
-          className="flex-1 px-3 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+          className="flex-1 px-3 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         <button
           onClick={handleImport}
           disabled={loading || !isValidUrl(url)}
-          className="px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors tap-highlight-none flex items-center gap-1.5"
+          className="px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors tap-highlight-none flex items-center gap-1.5"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />

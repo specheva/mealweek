@@ -37,7 +37,7 @@ export function TagChip({
         size === "md" && "px-3 py-1 text-sm min-h-[44px]",
         onClick && "cursor-pointer min-h-[44px] min-w-[44px] justify-center",
         active
-          ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+          ? "border-blue-200 bg-blue-50 text-blue-700"
           : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50",
         className
       )}

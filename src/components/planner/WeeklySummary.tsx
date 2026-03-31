@@ -89,7 +89,7 @@ export function WeeklySummary({ entries }: WeeklySummaryProps) {
   }
 
   const effortLabel: Record<string, { text: string; color: string }> = {
-    light: { text: "Light week", color: "text-emerald-600" },
+    light: { text: "Light week", color: "text-blue-600" },
     balanced: { text: "Balanced", color: "text-blue-600" },
     heavy: { text: "Effort-heavy", color: "text-amber-600" },
   };
@@ -127,7 +127,7 @@ export function WeeklySummary({ entries }: WeeklySummaryProps) {
       {summary.sharedIngredients.length > 0 && (
         <div>
           <div className="flex items-center gap-1.5 mb-1.5">
-            <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+            <ShoppingBag className="w-3.5 h-3.5 text-blue-600" />
             <span className="text-xs font-medium text-stone-600">
               Shared ingredients (buy once!)
             </span>
@@ -136,11 +136,11 @@ export function WeeklySummary({ entries }: WeeklySummaryProps) {
             {summary.sharedIngredients.map((ing) => (
               <span
                 key={ing.name}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs"
               >
                 <Utensils className="w-3 h-3" />
                 {ing.name}
-                <span className="text-emerald-500">×{ing.count}</span>
+                <span className="text-blue-500">×{ing.count}</span>
               </span>
             ))}
           </div>

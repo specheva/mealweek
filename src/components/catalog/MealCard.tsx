@@ -15,13 +15,14 @@ interface MealCardProps {
 }
 
 const difficultyColors: Record<string, string> = {
-  easy: "text-emerald-600 bg-emerald-50",
+  easy: "text-blue-600 bg-blue-50",
   medium: "text-amber-600 bg-amber-50",
   hard: "text-red-600 bg-red-50",
 };
 
 export function MealCard({ meal }: MealCardProps) {
   const totalTime = (meal.prepTimeMinutes || 0) + (meal.cookTimeMinutes || 0);
+  const tag = meal.tags[0]?.tag;
 
   return (
     <Link
@@ -42,14 +43,12 @@ export function MealCard({ meal }: MealCardProps) {
           </div>
         )}
 
-        {/* Favorite badge */}
         {meal.isFavorite && (
           <div className="absolute top-2 right-2 p-1 rounded-full bg-white/90 shadow-sm">
             <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
           </div>
         )}
 
-        {/* Incomplete badge */}
         {!meal.isComplete && (
           <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100/90 text-amber-700 text-xs font-medium">
             <AlertCircle className="w-3 h-3" />
@@ -57,10 +56,19 @@ export function MealCard({ meal }: MealCardProps) {
           </div>
         )}
 
-        {/* Source badge */}
         {meal.sourceUrl && (
           <div className="absolute bottom-2 right-2 p-1 rounded-full bg-white/90 shadow-sm">
             <ExternalLink className="w-3 h-3 text-stone-500" />
+          </div>
+        )}
+
+        {/* Tag badge on image */}
+        {tag && (
+          <div
+            className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-semibold text-white"
+            style={{ backgroundColor: tag.color || "#3b82f6" }}
+          >
+            {tag.name}
           </div>
         )}
       </div>
@@ -91,29 +99,11 @@ export function MealCard({ meal }: MealCardProps) {
           )}
         </div>
 
-        {/* Tags */}
-        {meal.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {meal.tags.slice(0, 3).map((mt) => (
-              <span
-                key={mt.tag.id}
-                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-stone-100 text-stone-500"
-              >
-                {mt.tag.color && (
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: mt.tag.color }}
-                  />
-                )}
-                {mt.tag.name}
-              </span>
-            ))}
-            {meal.tags.length > 3 && (
-              <span className="text-[10px] text-stone-400 py-0.5">
-                +{meal.tags.length - 3}
-              </span>
-            )}
-          </div>
+        {/* Ingredients list */}
+        {meal.ingredients.length > 0 && (
+          <p className="text-xs text-stone-500 mt-2 line-clamp-2">
+            {meal.ingredients.map((i) => i.name).join(", ")}
+          </p>
         )}
 
         {/* Footer */}

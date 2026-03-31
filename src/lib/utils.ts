@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]): string {
 
 /**
  * Returns the Monday of the week containing the given date.
- * MealWeek weeks always start on Monday.
+ * Sous Chef weeks always start on Monday.
  */
 export function getWeekStart(date: Date): Date {
   return startOfWeek(date, { weekStartsOn: 1 });

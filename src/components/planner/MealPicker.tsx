@@ -179,7 +179,7 @@ export function MealPicker({
                 setSearch(e.target.value);
                 if (e.target.value) setTab("all");
               }}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -194,7 +194,7 @@ export function MealPicker({
               }
               className={`flex-shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-colors tap-highlight-none ${
                 selectedTag === tag.id
-                  ? "bg-emerald-100 text-emerald-700"
+                  ? "bg-blue-100 text-blue-700"
                   : "bg-stone-100 text-stone-600 hover:bg-stone-200"
               }`}
             >
@@ -215,7 +215,7 @@ export function MealPicker({
             onClick={() => setTab("suggestions")}
             className={`px-3 py-2 text-sm font-medium border-b-2 transition-colors ${
               tab === "suggestions"
-                ? "border-emerald-600 text-emerald-700"
+                ? "border-blue-600 text-blue-700"
                 : "border-transparent text-stone-500"
             }`}
           >
@@ -226,7 +226,7 @@ export function MealPicker({
             onClick={() => setTab("all")}
             className={`px-3 py-2 text-sm font-medium border-b-2 transition-colors ${
               tab === "all"
-                ? "border-emerald-600 text-emerald-700"
+                ? "border-blue-600 text-blue-700"
                 : "border-transparent text-stone-500"
             }`}
           >
@@ -259,7 +259,7 @@ export function MealPicker({
                   </p>
                   <button
                     onClick={() => setTab("all")}
-                    className="mt-2 text-sm text-emerald-600 font-medium"
+                    className="mt-2 text-sm text-blue-600 font-medium"
                   >
                     Browse all meals
                   </button>
@@ -365,7 +365,7 @@ function PickerMealCard({
             {reasons.slice(0, 2).map((reason, i) => (
               <span
                 key={i}
-                className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600"
+                className="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600"
               >
                 {reason}
               </span>
@@ -377,7 +377,7 @@ function PickerMealCard({
       <button
         onClick={onAdd}
         disabled={isAdding}
-        className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors tap-highlight-none flex-shrink-0"
+        className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors tap-highlight-none flex-shrink-0"
       >
         {isAdding ? "..." : "Add"}
       </button>

@@ -214,7 +214,7 @@ export function Planner({ initialPlan, allMeals }: PlannerProps) {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-stone-900">MealWeek</h1>
+        <h1 className="text-xl font-bold text-stone-900">Sous Chef</h1>
 
         {/* View mode switcher */}
         <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-0.5">
@@ -222,7 +222,7 @@ export function Planner({ initialPlan, allMeals }: PlannerProps) {
             onClick={() => setViewMode("daily")}
             className={`p-1.5 rounded-md transition-colors tap-highlight-none ${
               viewMode === "daily"
-                ? "bg-white shadow-sm text-emerald-700"
+                ? "bg-white shadow-sm text-blue-700"
                 : "text-stone-500 hover:text-stone-700"
             }`}
             title="Daily view"
@@ -233,7 +233,7 @@ export function Planner({ initialPlan, allMeals }: PlannerProps) {
             onClick={() => setViewMode("weekly")}
             className={`p-1.5 rounded-md transition-colors tap-highlight-none ${
               viewMode === "weekly"
-                ? "bg-white shadow-sm text-emerald-700"
+                ? "bg-white shadow-sm text-blue-700"
                 : "text-stone-500 hover:text-stone-700"
             }`}
             title="Weekly view"
@@ -244,7 +244,7 @@ export function Planner({ initialPlan, allMeals }: PlannerProps) {
             onClick={() => setViewMode("monthly")}
             className={`p-1.5 rounded-md transition-colors tap-highlight-none ${
               viewMode === "monthly"
-                ? "bg-white shadow-sm text-emerald-700"
+                ? "bg-white shadow-sm text-blue-700"
                 : "text-stone-500 hover:text-stone-700"
             }`}
             title="Monthly view"
@@ -272,7 +272,7 @@ export function Planner({ initialPlan, allMeals }: PlannerProps) {
                 setWeekStart(today);
                 fetchPlan(today);
               }}
-              className="text-xs text-emerald-600 hover:text-emerald-700 font-medium"
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium"
             >
               Today
             </button>

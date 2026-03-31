@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Shared TypeScript types for MealWeek
+// Shared TypeScript types for Sous Chef
 //
 // These types extend the Prisma-generated types with common "include"
 // patterns used throughout the app.

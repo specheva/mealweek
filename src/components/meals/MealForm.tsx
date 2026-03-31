@@ -43,8 +43,8 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
   const [cuisine, setCuisine] = useState(meal?.cuisine || "");
   const [category, setCategory] = useState(meal?.category || "dinner");
   const [notes, setNotes] = useState(meal?.notes || "");
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    meal?.tags.map((mt) => mt.tag.id) || []
+  const [selectedTag, setSelectedTag] = useState<string | null>(
+    meal?.tags[0]?.tag.id || null
   );
   const [ingredients, setIngredients] = useState<IngredientInput[]>(
     meal?.ingredients.map((i) => ({
@@ -80,12 +80,8 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
     setIngredients(updated);
   };
 
-  const toggleTag = (tagId: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tagId)
-        ? prev.filter((id) => id !== tagId)
-        : [...prev, tagId]
-    );
+  const selectTag = (tagId: string) => {
+    setSelectedTag((prev) => (prev === tagId ? null : tagId));
   };
 
   const handleImportData = (data: {
@@ -133,7 +129,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
       notes: notes.trim() || null,
       isFavorite,
       isComplete: hasAllDetails,
-      tagIds: selectedTags,
+      tagIds: selectedTag ? [selectedTag] : [],
       ingredients: validIngredients.map((i) => ({
         name: i.name.trim(),
         quantity: i.quantity ? parseFloat(i.quantity) : null,
@@ -198,21 +194,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g., Chicken Tacos"
             required
-            className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-          />
-        </div>
-
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">
-            Description
-          </label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Brief description of the meal..."
-            rows={2}
-            className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+            className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -228,7 +210,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
               onChange={(e) => setPrepTime(e.target.value)}
               placeholder="10"
               min="0"
-              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -241,7 +223,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
               onChange={(e) => setCookTime(e.target.value)}
               placeholder="20"
               min="0"
-              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -251,7 +233,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
@@ -271,7 +253,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
               value={cuisine}
               onChange={(e) => setCuisine(e.target.value)}
               placeholder="e.g., Mexican"
-              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -281,7 +263,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
@@ -301,7 +283,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://..."
-            className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -315,28 +297,33 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             value={sourceUrl}
             onChange={(e) => setSourceUrl(e.target.value)}
             placeholder="Instagram / TikTok / recipe link"
-            className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        {/* Tags */}
+        {/* Category (pick one) */}
         <div>
           <label className="block text-sm font-medium text-stone-700 mb-1.5">
-            Tags
+            Category
           </label>
           <div className="flex flex-wrap gap-1.5">
             {tags.map((tag) => (
               <button
                 key={tag.id}
                 type="button"
-                onClick={() => toggleTag(tag.id)}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-colors tap-highlight-none ${
-                  selectedTags.includes(tag.id)
-                    ? "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300"
+                onClick={() => selectTag(tag.id)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all tap-highlight-none ${
+                  selectedTag === tag.id
+                    ? "text-white shadow-sm"
                     : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                 }`}
+                style={
+                  selectedTag === tag.id
+                    ? { backgroundColor: tag.color || "#3b82f6" }
+                    : undefined
+                }
               >
-                {tag.color && (
+                {selectedTag !== tag.id && tag.color && (
                   <span
                     className="w-2 h-2 rounded-full"
                     style={{ backgroundColor: tag.color }}
@@ -357,7 +344,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             <button
               type="button"
               onClick={addIngredient}
-              className="flex items-center gap-1 text-xs text-emerald-600 font-medium tap-highlight-none"
+              className="flex items-center gap-1 text-xs text-blue-600 font-medium tap-highlight-none"
             >
               <Plus className="w-3.5 h-3.5" />
               Add
@@ -372,7 +359,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
                     value={ing.name}
                     onChange={(e) => updateIngredient(i, "name", e.target.value)}
                     placeholder="Ingredient"
-                    className="col-span-5 px-2.5 py-1.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="col-span-5 px-2.5 py-1.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
@@ -381,21 +368,21 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
                       updateIngredient(i, "quantity", e.target.value)
                     }
                     placeholder="Qty"
-                    className="col-span-2 px-2.5 py-1.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="col-span-2 px-2.5 py-1.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
                     value={ing.unit}
                     onChange={(e) => updateIngredient(i, "unit", e.target.value)}
                     placeholder="Unit"
-                    className="col-span-2 px-2.5 py-1.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="col-span-2 px-2.5 py-1.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <select
                     value={ing.category}
                     onChange={(e) =>
                       updateIngredient(i, "category", e.target.value)
                     }
-                    className="col-span-3 px-2 py-1.5 rounded-lg border border-stone-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="col-span-3 px-2 py-1.5 rounded-lg border border-stone-200 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="protein">Protein</option>
                     <option value="produce">Produce</option>
@@ -427,7 +414,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Any cooking tips, variations, etc..."
             rows={3}
-            className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+            className="w-full px-3 py-2.5 rounded-xl border border-stone-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           />
         </div>
 
@@ -437,7 +424,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
             type="checkbox"
             checked={isFavorite}
             onChange={(e) => setIsFavorite(e.target.checked)}
-            className="rounded border-stone-300 text-emerald-600 focus:ring-emerald-500"
+            className="rounded border-stone-300 text-blue-600 focus:ring-blue-500"
           />
           <span className="text-sm text-stone-700">Mark as favorite</span>
         </label>
@@ -446,7 +433,7 @@ export function MealForm({ meal, tags, showImport = false }: MealFormProps) {
         <button
           type="submit"
           disabled={saving || !title.trim()}
-          className="w-full py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors tap-highlight-none flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors tap-highlight-none flex items-center justify-center gap-2"
         >
           {saving && <Loader2 className="w-4 h-4 animate-spin" />}
           {isEditing ? "Save Changes" : "Add Meal"}

@@ -10,9 +10,9 @@ const geistSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "MealWeek — Weekly Meal Planner",
+  title: "Sous Chef — Your Kitchen Planning Assistant",
   description:
-    "Plan your meals for the week, reuse favorites, and discover complementary meal combinations.",
+    "Your personal kitchen assistant for weekly meal planning, smart suggestions, and ingredient management.",
 };
 
 export const viewport: Viewport = {
