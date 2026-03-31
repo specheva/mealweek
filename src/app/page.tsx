@@ -66,7 +66,7 @@ export default async function Home() {
       orderBy: { updatedAt: "desc" },
     });
 
-    const showOnboarding = !!(session && !(session as any)?.onboarded);
+    const showOnboarding = !session;
 
     return (
       <HomeClient showOnboarding={showOnboarding}>
