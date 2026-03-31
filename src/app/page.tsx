@@ -5,51 +5,54 @@ import { HomeClient } from "@/components/HomeClient";
 import { startOfDay } from "date-fns";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { prefillWeekPlan } from "@/lib/prefill-week";
 
 export const dynamic = "force-dynamic";
+
+const includeAll = {
+  entries: {
+    include: {
+      meal: {
+        include: {
+          tags: { include: { tag: true } },
+          ingredients: true,
+        },
+      },
+    },
+    orderBy: [
+      { dayOfWeek: "asc" as const },
+      { sortOrder: "asc" as const },
+    ],
+  },
+};
 
 export default async function Home() {
   try {
     const session = await getServerSession(authOptions);
     const householdId = (session as any)?.householdId || null;
-
     const weekStart = startOfDay(getWeekStart(new Date()));
 
     let plan = await prisma.weekPlan.findFirst({
       where: householdId
         ? { householdId, weekStart }
         : { weekStart, householdId: null },
-      include: {
-        entries: {
-          include: {
-            meal: {
-              include: {
-                tags: { include: { tag: true } },
-                ingredients: true,
-              },
-            },
-          },
-          orderBy: [{ dayOfWeek: "asc" as const }, { sortOrder: "asc" as const }],
-        },
-      },
+      include: includeAll,
     });
 
     if (!plan) {
+      // Create a new plan and pre-fill it with suggestions
       plan = await prisma.weekPlan.create({
         data: { weekStart, householdId },
-        include: {
-          entries: {
-            include: {
-              meal: {
-                include: {
-                  tags: { include: { tag: true } },
-                  ingredients: true,
-                },
-              },
-            },
-          },
-        },
+        include: includeAll,
       });
+
+      await prefillWeekPlan(plan.id, householdId);
+
+      // Re-fetch with the new entries
+      plan = await prisma.weekPlan.findUnique({
+        where: { id: plan.id },
+        include: includeAll,
+      }) ?? plan;
     }
 
     const allMeals = await prisma.meal.findMany({

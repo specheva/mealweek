@@ -3,6 +3,24 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { startOfDay } from "date-fns";
+import { prefillWeekPlan } from "@/lib/prefill-week";
+
+const includeAll = {
+  entries: {
+    include: {
+      meal: {
+        include: {
+          tags: { include: { tag: true } },
+          ingredients: true,
+        },
+      },
+    },
+    orderBy: [
+      { dayOfWeek: "asc" as const },
+      { sortOrder: "asc" as const },
+    ],
+  },
+};
 
 export async function GET(req: NextRequest) {
   const weekStartParam = req.nextUrl.searchParams.get("weekStart");
@@ -18,37 +36,22 @@ export async function GET(req: NextRequest) {
     where: householdId
       ? { householdId, weekStart }
       : { weekStart, householdId: null },
-    include: {
-      entries: {
-        include: {
-          meal: {
-            include: {
-              tags: { include: { tag: true } },
-              ingredients: true,
-            },
-          },
-        },
-        orderBy: [{ dayOfWeek: "asc" }, { sortOrder: "asc" }],
-      },
-    },
+    include: includeAll,
   });
 
   if (!plan) {
     plan = await prisma.weekPlan.create({
       data: { weekStart, householdId },
-      include: {
-        entries: {
-          include: {
-            meal: {
-              include: {
-                tags: { include: { tag: true } },
-                ingredients: true,
-              },
-            },
-          },
-        },
-      },
+      include: includeAll,
     });
+
+    // Pre-fill with suggestions
+    await prefillWeekPlan(plan.id, householdId);
+
+    plan = await prisma.weekPlan.findUnique({
+      where: { id: plan.id },
+      include: includeAll,
+    }) ?? plan;
   }
 
   return NextResponse.json(plan);
